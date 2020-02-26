@@ -2,7 +2,14 @@
 .cpu cortex-m3
 .thumb
 
-.word 0x20000400
+.data
+var1:
+    .space 4 @ Reserve 4 bytes for memory block “var1”
+var2:
+    .space 1 @ Reserve 1 byte for memory block “var2”
+
+.text
+.word _StackEnd
 .word 0x080000ed
 .space 0xe4
 
