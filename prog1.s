@@ -9,14 +9,13 @@ var2:
     .space 1 @ Reserve 1 byte for memory block “var2”
 
 .text
-.word _StackEnd
-.word 0x080000ed
-.space 0xe4
-
+.type Reset_Handler, %function
+.global Reset_Handler
+Reset_Handler:
 @BASE 0x4002 1000 - 0x4002 13FF Reset and clock control RCC
 @BASE 0x4001 1000 - 0x4001 13FF GPIO Port C
 
-nop @do nothing
+@nop do nothing
 @ldr r0, =0x00000010 @load GPIOC clk enable, bit IOPCEN 4 GPIOC
 @ldr r1, =0x40021018 @load RCC base address + RCC offset 0x18, @ Set IOPAEN bit in RCC_APB2ENR to 1 to enable GPIOC
 @str r0, [r1] @enable GPIOC clock

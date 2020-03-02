@@ -6,6 +6,11 @@ MEMORY
 
 SECTIONS
 {
+    .VectorTable :
+    {
+        *(.VectorTable)
+    } > FLASH
+
     .text :
     {
         *(.text)
