@@ -1,5 +1,26 @@
-arm-none-eabi-as .\startup.s -o .\startup.o
-arm-none-eabi-as .\.prog1.s -o .\prog1.o
-arm-none-eabi-ld -o firm.elf -T stm32f103.ld .\startup.o .\main.o
-arm-none-eabi-objcopy .\firm.elf .\firm.bin -O binary
-arm-none-eabi-objdump -D .\firm.elf > firm.lst
+// compile
+arm-none-eabi-as vectorTable.S -g -o vectorTable.o
+arm-none-eabi-as prog1.S -g -o prog1.o
+
+// link
+arm-none-eabi-ld vectorTable.o prog1.o -T stm32f103.ld -o firm.elf
+
+// retrive binary, list
+arm-none-eabi-objcopy firm.elf firm.bin -O binary
+arm-none-eabi-objdump -D firm.elf > firm.lst
+
+// openocd
+openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg
+//download the compiled app to the mcu that has been attached via ST-Link, use OpenOCD like so:
+openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg -c "program prog1.elf verify reset exit"
+
+// gdb
+arm-none-eabi-gdb firm.elf
+target remote :3333
+monitor reset halt
+load
+info reg
+stepi
+continue c
+kill
+quit
