@@ -1,4 +1,5 @@
-PS D:\arm_asm> arm-none-eabi-as .\startup.s -o .\startup.o
-PS D:\arm_asm> arm-none-eabi-ld -o firm.elf -T .\linker.ld .\startup.o .\main.o
-PS D:\arm_asm> arm-none-eabi-objcopy .\firm.elf .\firm.bin -O binary
-PS D:\arm_asm> arm-none-eabi-objdump -D .\firm.elf > firm.lst
+arm-none-eabi-as .\startup.s -o .\startup.o
+arm-none-eabi-as .\.prog1.s -o .\prog1.o
+arm-none-eabi-ld -o firm.elf -T stm32f103.ld .\startup.o .\main.o
+arm-none-eabi-objcopy .\firm.elf .\firm.bin -O binary
+arm-none-eabi-objdump -D .\firm.elf > firm.lst
