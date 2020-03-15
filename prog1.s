@@ -19,10 +19,11 @@ Reset_Handler:
 @ldr r0, =0x00000010 @load GPIOC clk enable, bit IOPCEN 4 GPIOC
 @ldr r1, =0x40021018 @load RCC base address + RCC offset 0x18, @ Set IOPAEN bit in RCC_APB2ENR to 1 to enable GPIOC
 @str r0, [r1] @enable GPIOC clock
-
-ldr r1, =0x40021018
+.equ RCC_APB2ENR, 0x40021018
+RCC_APB2ENR_IOPCEN = 16 @IO port C clock enable, 16
+ldr r1, =RCC_APB2ENR
 ldr r0, [r1]
-orr r0, r0, #16
+orr r0, r0, RCC_APB2ENR_IOPCEN
 str r0, [r1]
 
 @ldr r0, =0x44244444 @push-pull and output 2Mhz, Reset value: 0x4444 4444
